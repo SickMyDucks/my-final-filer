@@ -29,4 +29,23 @@ class MainController extends BaseController
         }
         return $this->render('register.html.twig', $logs);
     }
+
+    public function loginAction()
+    {
+        require_once('Model/UsersManager.php');
+
+        if (isset($_SESSION['username'])) {
+            session_destroy();
+        }
+        $logs = [];
+        if (isset($_POST['username']) && isset($_POST['password']))
+        {
+            $username = htmlentities($_POST['username']);
+            $password = htmlentities($_POST['password']);
+            $manager = new UsersManager();
+            $errors = $manager->login($username, $password);
+            $logs = ['errors' => $errors];
+        }
+        return $this->render('login.html.twig', $logs);
+    }
 }
