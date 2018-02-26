@@ -4,11 +4,11 @@ require_once('Cool/DBManager.php');
 
 class UsersManager
 {
-    public function register($username, $firstName, $email, $password, $passwordRepeat)
+    public function register($firstName, $lastName, $username, $email, $password, $passwordRepeat)
     {
         $isFormValid = true;
         $errors = [];
-        if (strlen($_POST['username']) < 4) {
+        if (strlen($username) < 4) {
             $errors['username'] = "Username too short";
             $isFormValid = false;
         } 
@@ -16,7 +16,7 @@ class UsersManager
             $username_error = 'Username already taken, choose another one.';
             $isFormValid = false;
         }*/ 
-        if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = "Invalid email !";
             $isFormValid = false;
         } 
@@ -24,10 +24,10 @@ class UsersManager
             $email_error = "Email already in use on our site";
             $isFormValid = false;
         } */
-        if (strlen($_POST['password']) < 8) {
+        if (strlen($password) < 8) {
             $errors['password'] = 'Password too short';
             $isFormValid = false;
-        } elseif ($_POST['password'] != $_POST['password-repeat']) {
+        } elseif ($password != $passwordRepeat) {
             $errors['password'] = "Passwords do not match";
             $isFormValid = false;
         }
