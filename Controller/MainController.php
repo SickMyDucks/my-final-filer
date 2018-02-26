@@ -11,7 +11,7 @@ class MainController extends BaseController
 
     public function registerAction()
     {
-        $errors = ['none'];
+        $logs = [];
         require_once('Model/UsersManager.php');
         if(isset($_POST['username']) && isset($_POST['first-name'])
         && isset($_POST['last-name']) && isset($_POST['email'])
