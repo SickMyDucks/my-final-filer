@@ -1,0 +1,25 @@
+body {
+    font-family: 'Muli';
+}
+
+form[name="register"] {
+    width: 600px;
+}
+
+form[name="register"] label {
+    font-family: 'Muli';
+    display: inline-block;
+    white-space: nowrap;
+    width: 25%;
+}
+form[name="register"] input[type="text"], form[name="register"] input[type="password"] {
+    width: 30%;
+}
+
+span {
+    width: 45%;
+}
+
+input[type="submit"] {
+    margin: 15px auto;
+}
