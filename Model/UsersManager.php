@@ -47,6 +47,8 @@ class UsersManager
 
         $stmt->execute();
 
+        mkdir('uploads/'.$username);
+
         return $errors;
     }
 
