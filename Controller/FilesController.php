@@ -11,7 +11,9 @@ class FilesController extends BaseController
         {
             header('Location: ?action=login');
         }
-        $data = [];
+        $data = [
+            'user'    => $_SESSION,
+        ];
         require_once('Model/FilesManager.php');
         $manager = new FilesManager();
         if (isset($_FILES["file"]["name"]))
@@ -25,8 +27,9 @@ class FilesController extends BaseController
             }
             $logs = $manager->upload($_FILES['file'], $filename);
             $data = [
-                'error' => $logs['error'],
-                'success'=> $logs['success']
+                'error'   => $logs['error'],
+                'success' => $logs['success'],
+                'user'    => $_SESSION,
             ];
         }
         
@@ -41,13 +44,13 @@ class FilesController extends BaseController
             header('Location: ?action=login');
             return false;
         }
-        $data = [];
         require_once('Model/FilesManager.php');
         $manager = new FilesManager();
         $data = $manager->scandir($_SESSION['username']);
         $data = [
             'error'      => $data[1]['error'],
-            'directory'  => $data[0]
+            'directory'  => $data[0],
+            'user'       => $_SESSION,
         ];
         return $this->render('files.html.twig', $data);
     }
