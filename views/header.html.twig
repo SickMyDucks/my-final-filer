@@ -1,0 +1,11 @@
+{% block header %}
+
+{% if user['username'] is defined %}
+<div>Connected as {{ user['username'] }}</div>
+<div><a href="?action=logout">Logout</a></div>
+{% else %}
+<div><a href="?action=register">Register</a></div>
+<div><a href="?action=login">Log in</a></div>
+{% endif %}
+
+{% endblock %}
