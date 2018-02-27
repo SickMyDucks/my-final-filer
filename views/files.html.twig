@@ -6,7 +6,9 @@
 <table>
     {% for item in directory %}
         <tr>
-            <td>{{item}}</td>
+            <td><i class="fas fa-{{ item['type'] }}"></i></td>
+            <td>{{item['name']}}</td>
+            <td>{{item['modified_last']}}</td>
         </tr>
     {% endfor %}
     <tr>
