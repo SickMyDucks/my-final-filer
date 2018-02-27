@@ -28,4 +28,14 @@ class FilesManager
         }
         return $logs;
     }
+
+    public function scandir($username)
+    {
+        $folderContent = array_diff(scandir("uploads/".$_SESSION['username']), array('.'));
+        if (count($folderContent) == 1)
+        {
+            $logs['error'] = 'No file in this folder.';
+        }
+        return [$folderContent, $logs];
+    }
 }
