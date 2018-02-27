@@ -28,4 +28,21 @@ class FilesManager
         }
         return $logs;
     }
+
+    public function scandir($username)
+    {
+        $folderContent = array_diff(scandir("uploads/".$_SESSION['username']), array('.'));
+        if (count($folderContent) == 1)
+        {
+            $logs['error'] = 'No file in this folder.';
+        }
+        for ($i = 1; $i <= count($folderContent); $i++)
+        {
+            $files[$i]['type'] = is_dir("uploads/" .$_SESSION['username'] . "/" . $folderContent[$i]) ? 'folder' : 'file' ;
+            $files[$i]['name'] = $folderContent[$i];
+            $files[$i]['modified_last'] =  date("d/n/Y - H:i:s", filemtime("uploads/" .$_SESSION['username'] . "/" . $folderContent[$i]));
+        }
+
+        return [$files, $logs];
+    }
 }

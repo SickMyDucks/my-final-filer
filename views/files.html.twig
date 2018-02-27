@@ -1,0 +1,29 @@
+{% extends 'layout.html.twig' %}
+{% use 'header.html.twig' %}    
+
+{% block page_title %}My files{% endblock %}
+
+{% block content %}
+
+{% if user['username'] is defined %}
+
+<table>
+    {% for item in directory %}
+        <tr>
+            <td><i class="fas fa-{{ item['type'] }}"></i></td>
+            <td>{{item['name']}}</td>
+            <td>{{item['modified_last']}}</td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td>{{ error }} </td>
+    </tr>
+</table>
+
+{% else %}
+
+<div class="warning">Login to see your files</div>
+
+{% endif %}
+
+{% endblock %}

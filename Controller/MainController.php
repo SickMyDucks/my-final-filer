@@ -25,9 +25,9 @@ class MainController extends BaseController
             $passwordRepeat = htmlentities($_POST['password-repeat']);
             $manager = new UsersManager();
             $errors = $manager-> register($firstName, $lastName, $username, $email, $password, $passwordRepeat);
-            $logs = ['errors' => $errors];
+            $data = ['errors' => $errors];
         }
-        return $this->render('register.html.twig', $logs);
+        return $this->render('register.html.twig', $data);
     }
 
     public function loginAction()
@@ -37,15 +37,26 @@ class MainController extends BaseController
         if (isset($_SESSION['username'])) {
             session_destroy();
         }
-        $logs = [];
+        $data = [];
         if (isset($_POST['username']) && isset($_POST['password']))
         {
             $username = htmlentities($_POST['username']);
             $password = htmlentities($_POST['password']);
             $manager = new UsersManager();
             $errors = $manager->login($username, $password);
-            $logs = ['errors' => $errors];
+            $data = [
+                'errors' => $errors,
+                'user'   => $_SESSION,
+            ];
         }
-        return $this->render('login.html.twig', $logs);
+        return $this->render('login.html.twig', $data);
+    }
+
+    public function logoutAction()
+    {
+        session_start();
+        session_destroy();
+        header('Location: index.php');
+        exit();
     }
 }
