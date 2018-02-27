@@ -23,3 +23,11 @@ span {
 input[type="submit"] {
     margin: 15px auto;
 }
+
+.error {
+    color: #D64541;
+}
+
+.success {
+    color : #26A65B;
+}

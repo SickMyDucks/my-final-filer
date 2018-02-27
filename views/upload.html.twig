@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}Your files{% endblock %}
+
+{% block content %}
+<form action="?action=upload" method="POST" enctype="multipart/form-data" name="upload">
+    <div class="error">{{ error }}</div>
+    <label for="file">Select file to upload: </label><input type="file" name="file" id="file"><br>
+    <label for="name">File name: </label><input type="test" name="name" id="name"><br>
+    <input type="submit" name="submit" value="Upload file">
+    <div class="success">{{ success }}</div>
+</form>
+{% endblock %}
