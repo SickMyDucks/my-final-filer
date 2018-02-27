@@ -38,9 +38,9 @@ class FilesManager
         }
         for ($i = 1; $i <= count($folderContent); $i++)
         {
-            $files['type'][$i] = is_dir("uploads/" .$_SESSION['username'] . "/" . $folderContent[$i]) ? 'folder' : 'file' ;
-            $files['name'][$i] = $folderContent[$i];
-            $files['modified_last'][$i] =  date("d/n/Y - H:i:s", filemtime("uploads/" .$_SESSION['username'] . "/" . $folderContent[$i]));
+            $files[$i]['type'] = is_dir("uploads/" .$_SESSION['username'] . "/" . $folderContent[$i]) ? 'folder' : 'file' ;
+            $files[$i]['name'] = $folderContent[$i];
+            $files[$i]['modified_last'] =  date("d/n/Y - H:i:s", filemtime("uploads/" .$_SESSION['username'] . "/" . $folderContent[$i]));
         }
 
         return [$files, $logs];
