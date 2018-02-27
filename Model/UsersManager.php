@@ -48,6 +48,7 @@ class UsersManager
         $stmt->execute();
 
         mkdir('uploads/'.$username);
+        header('Location: ?action=login');
 
         return $errors;
     }
@@ -64,7 +65,7 @@ class UsersManager
             session_start();
             $_SESSION['id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
-            header('Location: ?action=files');
+            header('Location: ?action=upload');
             exit();
         } else {
             return 'Username or password is invalid.';
