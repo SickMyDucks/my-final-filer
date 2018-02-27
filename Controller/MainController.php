@@ -33,7 +33,7 @@ class MainController extends BaseController
     public function loginAction()
     {
         require_once('Model/UsersManager.php');
-
+        session_start();
         if (isset($_SESSION['username'])) {
             session_destroy();
         }
