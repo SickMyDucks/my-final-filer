@@ -32,4 +32,23 @@ class FilesController extends BaseController
         
         return $this->render('upload.html.twig', $data);
     }
+
+    public function filesAction()
+    {
+        session_start();
+        if(!isset($_SESSION))
+        {
+            header('Location: ?action=login');
+            return false;
+        }
+        $data = [];
+        require_once('Model/FilesManager.php');
+        $manager = new FilesManager();
+        $data = $manager->scandir($_SESSION['username']);
+        $data = [
+            'error'      => $data[1]['error'],
+            'directory'  => $data[0]
+        ];
+        return $this->render('files.html.twig', $data);
+    }
 }
