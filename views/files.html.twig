@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+
+{% block page_title %}My files{% endblock %}
+
+{% block content %}
+<table>
+    {% for item in directory %}
+        <tr>
+            <td>{{item}}</td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td>{{ error }} </td>
+    </tr>
+</table>
+{% endblock %}
