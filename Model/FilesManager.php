@@ -36,6 +36,13 @@ class FilesManager
         {
             $logs['error'] = 'No file in this folder.';
         }
-        return [$folderContent, $logs];
+        for ($i = 1; $i <= count($folderContent); $i++)
+        {
+            $files['type'][$i] = is_dir("uploads/" .$_SESSION['username'] . "/" . $folderContent[$i]) ? 'folder' : 'file' ;
+            $files['name'][$i] = $folderContent[$i];
+            $files['modified_last'][$i] =  date("d/n/Y - H:i:s", filemtime("uploads/" .$_SESSION['username'] . "/" . $folderContent[$i]));
+        }
+
+        return [$files, $logs];
     }
 }
