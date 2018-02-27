@@ -21,6 +21,7 @@ class FilesController extends BaseController
                 $filename = $_POST['name'];
             } else {
                 $filename = $_FILES["file"]["name"];
+                $filename = str_replace('/', '', $filename);
             }
             $logs = $manager->upload($_FILES['file'], $filename);
             $data = [
