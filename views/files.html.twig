@@ -15,9 +15,12 @@
             <td>{{item['modified_last']}}</td>
         </tr>
     {% endfor %}
+    {% if error != "" %}
     <tr>
+        <td><i class="fas fa-times"></i></td>
         <td>{{ error }} </td>
     </tr>
+    {% endif %}
 </table>
 
 {% else %}

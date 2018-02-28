@@ -46,7 +46,8 @@ class FilesController extends BaseController
         }
         require_once('Model/FilesManager.php');
         $manager = new FilesManager();
-        $data = $manager->scandir($_SESSION['username']);
+        $folder = $_GET['dir'];
+        $data = $manager->scandir($_SESSION['username']."/".$folder);
         $data = [
             'error'      => $data[1]['error'],
             'directory'  => $data[0],

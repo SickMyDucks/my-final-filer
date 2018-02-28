@@ -29,9 +29,13 @@ class FilesManager
         return $logs;
     }
 
-    public function scandir($username)
+    public function scandir($path)
     {
-        $folderContent = array_diff(scandir("uploads/".$_SESSION['username']), array('.'));
+        $folderContent = array_diff(scandir("uploads/".$path), array('.'));
+        if (count($folderContent) == 0)
+        {
+            $logs['error'] = 'This folder does not exist.';
+        }
         if (count($folderContent) == 1)
         {
             $logs['error'] = 'No file in this folder.';
