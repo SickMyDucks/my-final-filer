@@ -61,8 +61,15 @@ class FilesController extends BaseController
     public function downloadAction()
     {
         $file = $_GET['file'];
-        var_dump($fileTarget);
         $manager = new FilesManager();
         $manager->download($file);
+    }
+
+    public function deleteAction()
+    {
+        $file = $_GET['file'];
+        $dir = $_GET['dir'];
+        $manager = new FilesManager();
+        $manager->delete($file, $dir);
     }
 }

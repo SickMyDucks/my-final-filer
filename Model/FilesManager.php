@@ -70,4 +70,12 @@ class FilesManager
         readfile($file);
         exit;
     }
+
+    public function delete($file, $dir)
+    {
+        session_start();
+        $file = "uploads/" . $_SESSION['username'] . $file;
+        unlink($file);
+        header('Location: ?action=files&dir='.$dir);
+    }
 }
