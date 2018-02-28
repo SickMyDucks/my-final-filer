@@ -48,12 +48,14 @@ class FilesController extends BaseController
         $folder = $_GET['dir'];
         $lowerLevel = $manager->parentFolder($folder);
         $data = $manager->scandir($_SESSION['username'].$folder);
+        $folders = $manager->foldersOnly($data[0]);
         $data = [
             'error'      => $data[1]['error'],
             'directory'  => $data[0],
             'user'       => $_SESSION,
             'currentdir' => $folder,
             'lowerlevel' => $lowerLevel,
+            'folders'    => $folders,
         ];
         return $this->render('files.html.twig', $data);
     }
@@ -82,4 +84,14 @@ class FilesController extends BaseController
         $manager->delTree($dir);
         header("Location: ?action=files&dir=$lowerLevel");
     }
+
+    // public function moveFolderAction()
+    // {
+    //     $manager = new FilesManager();
+    //     session_start();
+    //     $folder = $_GET['dir'];
+    //     var_dump($folder);
+    //     $folderContent = $manager->scandir($_SESSION['username'].$folder);
+    //     var_dump($folderContent);
+    // }
 }
