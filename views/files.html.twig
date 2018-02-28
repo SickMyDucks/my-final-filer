@@ -23,6 +23,11 @@
             {% endif %}
             </td>
             <td>{{ item['modified_last'] }}</td>
+            {% if item['type'] == 'file' %}
+            <td><a href="?action=download&amp;file={{ currentdir }}/{{ item['name'] }}"><i class="fas fa-download"></i></a></td>
+            {% else %}
+            <td></td>
+            {% endif %}
         </tr>
     {% endfor %}
     {% if error != "" %}
