@@ -83,4 +83,17 @@ class FilesManager
         }
         rmdir($dir);
     }
+
+    public function foldersOnly($scannedDir)
+    {
+        $folders = [];
+        for ($i = 1; $i <= count($scannedDir); $i++)
+        {
+            if ($scannedDir[$i]['type'] == 'folder')
+            {
+                $folders[] = $scannedDir[$i]['name'];
+            }
+        }
+        return $folders;
+    }
 }
