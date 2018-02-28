@@ -8,9 +8,18 @@
 {% if user['username'] is defined %}
 
 <table>
+    <tr>
+        <td></td>
+        <td>Name</td>
+        <td>Modified last</td>
+        <td>Download</td>
+        <td>Delete</td>
+        <td>Move to</td>
+    </tr>
     {% for item in directory %}
         <tr>
-            <td><i class="fas fa-{{ item['type'] }}"></i></td>
+            <td><i class="fas fa-{{ item['type'] }}"></i></td> {# 1st <td> #}
+            {# 2nd <td> #}
             {% if item['type'] == 'folder' %}
 
                 {% if item['name'] == '..' %}
@@ -28,9 +37,12 @@
             <td>{{ item['name'] }}</td>
 
             {% endif %}
+            {# End 2nd <td> #}
 
-            <td>{{ item['modified_last'] }}</td>
 
+            <td>{{ item['modified_last'] }}</td> {# 3rd <td> #}
+
+            {# 4th and 5th <td> #}
             {% if item['type'] == 'file' %}
 
             <td><a href="?action=download&amp;file={{ currentdir }}/{{ item['name'] }}"><i class="fas fa-download"></i></a></td>
@@ -41,8 +53,30 @@
             <td></td>
                 {% if item['name'] != '..' %} 
                 <td><a href="?action=deleteDir&amp;dir={{ currentdir }}/{{ item['name'] }}"><i class="fas fa-trash"></i></a></td>
+                {% else %}
+                <td></td>
                 {% endif %}
             {% endif %}
+            {# End 4th and 5th <td> #}
+
+            {# 6th <td> #}
+            {% if item['name'] != '..' %}
+            <td>
+                <div class="move"><i class="fas fa-share"></i></div>
+                <div class="selection">
+                    <select>
+                        {% for folder in folders %}
+                        <option value="{{ folder }}">{{ folder }}</option> 
+                        {% endfor %}
+                    </select>
+                    <i class="fas fa-check"></i>
+                    <i class="fas fa-times"></i>
+                </div>
+            </td>
+            {% else %}
+            <td></td>
+            {% endif %}
+            {# End 6th <td> #}
         </tr>
     {% endfor %}
     {% if error != "" %}
