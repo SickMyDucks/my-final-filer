@@ -72,4 +72,14 @@ class FilesController extends BaseController
         $manager = new FilesManager();
         $manager->delete($file, $dir);
     }
+
+    public function deleteDirAction()
+    {
+        $manager = new FilesManager();
+        session_start();
+        $dir = "uploads/" . $_SESSION['username'] . $_GET['dir'];
+        $lowerLevel = $manager->parentFolder($_GET['dir']);
+        $manager->delTree($dir);
+        header("Location: ?action=files&dir=$lowerLevel");
+    }
 }

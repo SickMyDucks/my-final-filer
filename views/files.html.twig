@@ -11,23 +11,37 @@
     {% for item in directory %}
         <tr>
             <td><i class="fas fa-{{ item['type'] }}"></i></td>
-            <td>
             {% if item['type'] == 'folder' %}
+
                 {% if item['name'] == '..' %}
-                <a href="?action=files&amp;dir={{ lowerlevel }}">{{ item['name'] }}</a>
+
+                <td><a href="?action=files&amp;dir={{ lowerlevel }}">{{ item['name'] }}</a></td>
+                
                 {% else %}
-                <a href="?action=files&amp;dir={{ currentdir }}/{{ item['name'] }}">{{ item['name'] }}</a>
+
+                <td><a href="?action=files&amp;dir={{ currentdir }}/{{ item['name'] }}">{{ item['name'] }}</a></td>                
+                
                 {% endif %}
+
             {% else %}
-            {{ item['name'] }}
+
+            <td>{{ item['name'] }}</td>
+
             {% endif %}
-            </td>
+
             <td>{{ item['modified_last'] }}</td>
+
             {% if item['type'] == 'file' %}
+
             <td><a href="?action=download&amp;file={{ currentdir }}/{{ item['name'] }}"><i class="fas fa-download"></i></a></td>
             <td><a href="?action=delete&amp;dir={{ currentdir }}&amp;file={{ currentdir }}/{{ item['name'] }}"><i class="fas fa-trash"></i></a></td>
+            
             {% else %}
+
             <td></td>
+                {% if item['name'] != '..' %} 
+                <td><a href="?action=deleteDir&amp;dir={{ currentdir }}/{{ item['name'] }}"><i class="fas fa-trash"></i></a></td>
+                {% endif %}
             {% endif %}
         </tr>
     {% endfor %}
