@@ -42,11 +42,18 @@ class FilesManager
         }
         for ($i = 1; $i <= count($folderContent); $i++)
         {
-            $files[$i]['type'] = is_dir("uploads/" .$_SESSION['username'] . "/" . $folderContent[$i]) ? 'folder' : 'file' ;
+            $files[$i]['type'] = is_dir("uploads/" .$path . "/" . $folderContent[$i]) ? 'folder' : 'file' ;
             $files[$i]['name'] = $folderContent[$i];
-            $files[$i]['modified_last'] =  date("d/n/Y - H:i:s", filemtime("uploads/" .$_SESSION['username'] . "/" . $folderContent[$i]));
+            $files[$i]['modified_last'] =  date("d/n/Y - H:i:s", filemtime("uploads/" .$path . "/" . $folderContent[$i]));
         }
 
         return [$files, $logs];
+    }
+
+    public function parentFolder($folder)
+    {
+        $lastDirRegexp = "/\/([a-zA-Z]+)$/";
+        $lowerLevel = preg_replace($lastDirRegexp, '', $folder);
+        return $lowerLevel;
     }
 }

@@ -47,11 +47,14 @@ class FilesController extends BaseController
         require_once('Model/FilesManager.php');
         $manager = new FilesManager();
         $folder = $_GET['dir'];
-        $data = $manager->scandir($_SESSION['username']."/".$folder);
+        $lowerLevel = $manager->parentFolder($folder);
+        $data = $manager->scandir($_SESSION['username'].$folder);
         $data = [
             'error'      => $data[1]['error'],
             'directory'  => $data[0],
             'user'       => $_SESSION,
+            'currentdir' => $folder,
+            'lowerlevel' => $lowerLevel,
         ];
         return $this->render('files.html.twig', $data);
     }
