@@ -56,4 +56,26 @@ class FilesManager
         $lowerLevel = preg_replace($lastDirRegexp, '', $folder);
         return $lowerLevel;
     }
+
+    public function download($file)
+    {
+        session_start();
+        $file = "uploads/" . $_SESSION['username'] . $file;
+        header('Content-Description: File Transfer');
+        header('Content-Disposition: attachment; filename="'.basename($file).'"');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate');
+        header('Pragma: public');
+        header('Content-Length: ' . filesize($file));
+        readfile($file);
+        exit;
+    }
+
+    public function delete($file, $dir)
+    {
+        session_start();
+        $file = "uploads/" . $_SESSION['username'] . $file;
+        unlink($file);
+        header('Location: ?action=files&dir='.$dir);
+    }
 }

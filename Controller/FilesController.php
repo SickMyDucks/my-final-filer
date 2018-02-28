@@ -1,6 +1,7 @@
 <?php
 
 require_once('Cool/BaseController.php');
+require_once('Model/FilesManager.php');
 
 class FilesController extends BaseController
 {
@@ -14,7 +15,6 @@ class FilesController extends BaseController
         $data = [
             'user'    => $_SESSION,
         ];
-        require_once('Model/FilesManager.php');
         $manager = new FilesManager();
         if (isset($_FILES["file"]["name"]))
         {
@@ -44,7 +44,6 @@ class FilesController extends BaseController
             header('Location: ?action=login');
             return false;
         }
-        require_once('Model/FilesManager.php');
         $manager = new FilesManager();
         $folder = $_GET['dir'];
         $lowerLevel = $manager->parentFolder($folder);
@@ -57,5 +56,20 @@ class FilesController extends BaseController
             'lowerlevel' => $lowerLevel,
         ];
         return $this->render('files.html.twig', $data);
+    }
+
+    public function downloadAction()
+    {
+        $file = $_GET['file'];
+        $manager = new FilesManager();
+        $manager->download($file);
+    }
+
+    public function deleteAction()
+    {
+        $file = $_GET['file'];
+        $dir = $_GET['dir'];
+        $manager = new FilesManager();
+        $manager->delete($file, $dir);
     }
 }
