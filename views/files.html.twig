@@ -18,8 +18,8 @@
     </tr>
     {% for item in directory %}
         <tr>
-            <td><i class="fas fa-{{ item['type'] }}"></i></td> {# 1st <td> #}
-            {# 2nd <td> #}
+            <td><i class="fas fa-{{ item['type'] }}"></i></td> {# Icon type <td> #}
+            {# Name <td> #}
             {% if item['type'] == 'folder' %}
 
                 {% if item['name'] == '..' %}
@@ -37,12 +37,12 @@
             <td class="name">{{ item['name'] }}</td>
 
             {% endif %}
-            {# End 2nd <td> #}
+            {# End Name <td> #}
 
 
-            <td>{{ item['modified_last'] }}</td> {# 3rd <td> #}
+            <td>{{ item['modified_last'] }}</td> {# Modified Last <td> #}
 
-            {# 4th and 5th <td> #}
+            {# Download and remove <td> #}
             {% if item['type'] == 'file' %}
 
             <td><a href="?action=download&amp;file={{ currentdir }}/{{ item['name'] }}"><i class="fas fa-download"></i></a></td>
@@ -57,9 +57,9 @@
                 <td></td>
                 {% endif %}
             {% endif %}
-            {# End 4th and 5th <td> #}
+            {# End Download and remove <td> #}
 
-            {# 6th <td> #}
+            {# move <td> #}
             {% if item['name'] != '..' %}
             <td>
                 <div class="move"><i class="fas fa-share"></i></div>
@@ -78,7 +78,7 @@
             {% else %}
             <td></td>
             {% endif %}
-            {# End 6th <td> #}
+            {# End move <td> #}
         </tr>
     {% endfor %}
     {% if error != "" %}
