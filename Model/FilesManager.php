@@ -31,6 +31,7 @@ class FilesManager
 
     public function scandir($path)
     {
+        $logs = [];
         $folderContent = array_diff(scandir("uploads/" . $path), array('.'));
         if (count($folderContent) == 0) {
             $logs['error'] = 'This folder does not exist.';
@@ -95,5 +96,10 @@ class FilesManager
             }
         }
         return $folders;
+    }
+
+    public function move($source, $to)
+    {
+        rename($source, $to);  
     }
 }

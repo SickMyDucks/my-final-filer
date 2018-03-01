@@ -85,13 +85,16 @@ class FilesController extends BaseController
         header("Location: ?action=files&dir=$lowerLevel");
     }
 
-    // public function moveFolderAction()
-    // {
-    //     $manager = new FilesManager();
-    //     session_start();
-    //     $folder = $_GET['dir'];
-    //     var_dump($folder);
-    //     $folderContent = $manager->scandir($_SESSION['username'].$folder);
-    //     var_dump($folderContent);
-    // }
+    public function moveItemAction()
+    {
+        $manager = new FilesManager();
+        session_start();
+        $basepath = "uploads/" . $_SESSION['username'];
+        $from = $_GET['from'];
+        $file = $_GET['file'];
+        $currentDir = $manager->parentFolder($from);
+        $source = $basepath . $from;
+        $to = $basepath . $currentDir . '/' . $_GET['to'] . '/' . $file;
+        $manager->move($source, $to);
+    }
 }
