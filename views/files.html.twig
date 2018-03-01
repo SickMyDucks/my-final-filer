@@ -28,13 +28,13 @@
                 
                 {% else %}
 
-                <td><a href="?action=files&amp;dir={{ currentdir }}/{{ item['name'] }}">{{ item['name'] }}</a></td>                
+                <td class="name"><a href="?action=files&amp;dir={{ currentdir }}/{{ item['name'] }}">{{ item['name'] }}</a></td>                
                 
                 {% endif %}
 
             {% else %}
 
-            <td>{{ item['name'] }}</td>
+            <td class="name">{{ item['name'] }}</td>
 
             {% endif %}
             {# End 2nd <td> #}
@@ -66,11 +66,13 @@
                 <div class="selection">
                     <select>
                         {% for folder in folders %}
+                        {% if folder != item['name'] %}
                         <option value="{{ folder }}">{{ folder }}</option> 
+                        {% endif %}
                         {% endfor %}
                     </select>
-                    <i class="fas fa-check"></i>
-                    <i class="fas fa-times"></i>
+                    <a href="" class="validate-move"><i class="fas fa-check"></i></a>
+                    <a href="" class="cancel-move"><i class="fas fa-times"></i></a>
                 </div>
             </td>
             {% else %}
