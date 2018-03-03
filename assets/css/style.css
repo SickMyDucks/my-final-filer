@@ -7,7 +7,7 @@ body {
     font-family: 'Muli';
 }
 .header {
-    background-color: #4d4dff;
+    background-color: #82ccdd;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -18,18 +18,19 @@ body {
     height: 40px;
     border: solid 1px;
 }
-
-a:hover {
+a {
     color: white;
 }
 
+a:hover {
+    color: black;
+}
+
 form[name="register"] {
-    background-color: #4d4dff;
     width: 600px;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    border: solid 1px;
     margin: auto;
     padding-top: 50px;
 }
@@ -45,7 +46,6 @@ form[name="register"] label {
 form[name="register"] input[type="text"], form[name="register"] input[type="password"] {
     width: 30%;
     height: 20px;
-    box-shadow: -2px -2px 2px blue;
     border-radius: 5px;
 }
 
