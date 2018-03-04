@@ -97,4 +97,14 @@ class FilesController extends BaseController
         $to = $basepath . $currentDir . '/' . $_GET['to'] . '/' . $file;
         $manager->move($source, $to);
     }
+
+    public function renameItemAction() {
+        session_start();
+        $dir = 'uploads/' . $_SESSION['username'] . $_GET['dir'] . '/';
+        $from = $_GET['from'];
+        $to = $_GET['to'];
+        echo $dir . '<br>' . $from . '<br>' . $to . '<br>' ;
+        $manager = new FilesManager();
+        $manager->move($dir.$from, $dir.$to);
+    }
 }
