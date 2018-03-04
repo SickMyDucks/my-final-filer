@@ -50,7 +50,7 @@ class FilesController extends BaseController
         $data = $manager->scandir($_SESSION['username'].$folder);
         $folders = $manager->foldersOnly($data[0]);
         $data = [
-            'error'      => $data[1]['error'],
+            'error'      => isset($data[1]['error']) ? $data[1]['error'] : '',
             'directory'  => $data[0],
             'user'       => $_SESSION,
             'currentdir' => $folder,
@@ -79,7 +79,8 @@ class FilesController extends BaseController
     {
         $manager = new FilesManager();
         session_start();
-        $dir = "uploads/" . $_SESSION['username'] . $_GET['dir'];
+        $pattern = '/(\.\..)/';
+        $dir = "uploads/" . $_SESSION['username'] . preg_replace($pattern, '', $_GET['dir']);
         $lowerLevel = $manager->parentFolder($_GET['dir']);
         $manager->delTree($dir);
         header("Location: ?action=files&dir=$lowerLevel");
@@ -95,14 +96,16 @@ class FilesController extends BaseController
         $currentDir = $manager->parentFolder($from);
         $source = $basepath . $from;
         $to = $basepath . $currentDir . '/' . $_GET['to'] . '/' . $file;
+        echo $from . '<br>' . $source . '<br>' . $to;
         $manager->move($source, $to);
+        // header('Location: ?action=files&dir=' . $manager->parentFolder($_GET['from']));
     }
 
     public function renameItemAction() {
         session_start();
         $dir = 'uploads/' . $_SESSION['username'] . $_GET['dir'] . '/';
-        $from = $_GET['from'];
-        $to = $_GET['to'];
+        $from = str_replace('/', '', $_GET['from']);
+        $to = str_replace('/', '', $_GET['to']);
         echo $dir . '<br>' . $from . '<br>' . $to . '<br>' ;
         $manager = new FilesManager();
         $manager->move($dir.$from, $dir.$to);

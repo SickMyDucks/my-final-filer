@@ -50,7 +50,7 @@ class FilesManager
 
     public function parentFolder($folder)
     {
-        $lastDirRegexp = "/\/([a-zA-Z]+)$/";
+        $lastDirRegexp = "/\/([a-zA-Z]+(\/)?)$/";
         $lowerLevel = preg_replace($lastDirRegexp, '', $folder);
         return $lowerLevel;
     }
@@ -73,6 +73,7 @@ class FilesManager
     {
         session_start();
         $file = "uploads/" . $_SESSION['username'] . $file;
+        $file = str_replace('..', '', $file);
         unlink($file);
         header('Location: ?action=files&dir=' . $dir);
     }
