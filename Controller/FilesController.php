@@ -21,6 +21,7 @@ class FilesController extends BaseController
             if (isset($_POST['name']) && $_POST['name'] !== '')
             {
                 $filename = $_POST['name'];
+                $filename = str_replace('/', '', $filename);
             } else {
                 $filename = $_FILES["file"]["name"];
                 $filename = str_replace('/', '', $filename);
