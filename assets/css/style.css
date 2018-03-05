@@ -47,3 +47,21 @@ input[type="submit"] {
 select {
     width: 50%;
 }
+
+.name {
+    display: flex;
+    justify-content: space-between;
+}
+
+.name > * {
+    padding: 0 10px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+}
+.actions > * {
+    padding: 0 3px;
+    cursor: pointer;
+}

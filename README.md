@@ -5,10 +5,6 @@
 ## TODO : 
 
 * Front
-* Rename file
-* Delete file
-* Download file
-* Move file
 * Edit files
 * Manage folders (create, rename, move, delete)
 * Server configuration
