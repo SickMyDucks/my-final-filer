@@ -26,13 +26,17 @@ a:hover {
     color: black;
 }
 
-form[name="register"] {
+form {
     width: 600px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     margin: auto;
     padding-top: 50px;
+}
+
+form[name="login"] {
+    width: 300px;
 }
 
 form[name="register"] label {

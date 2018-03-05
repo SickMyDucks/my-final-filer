@@ -6,8 +6,8 @@
 {% block content %}
 <form action="?action=login" method="POST" name="login">
     <div class="errors">{{ errors }}</div>
-    <label for="username">Username: </label><input type="text" name="username" id="username"><span> {{ errors['username'] }}</span><br>
-    <label for="password">Password: </label><input type="password" name="password" id="password"><span> {{ errors['password'] }}</span><br>
+    <div><label for="username">Username: </label><input type="text" name="username" id="username"><span> {{ errors['username'] }}</span></div><br>
+    <div><label for="password">Password: </label><input type="password" name="password" id="password"><span> {{ errors['password'] }}</span></div><br>
     <input type="submit" name="submit" value="Login">
 </form>
 {% endblock %}
