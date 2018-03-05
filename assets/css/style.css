@@ -19,7 +19,7 @@ body {
     border: solid 1px;
 }
 a {
-    color: white;
+    color: #A074C4;
 }
 
 a:hover {
@@ -75,12 +75,8 @@ input[type="submit"] {
     color : #26A65B;
 }
 
-.move {
-    display: none;
-}
-
 .selection {
-    display: flex;  
+    display: none;  
 }
 
 .selection > * {

@@ -3,7 +3,7 @@ window.onload = () => {
     var renameButtons = document.querySelectorAll('.edit')
     moveFolder(validateButton);
     rename(renameButtons);
-
+    moveButtons();
 }
 
 function moveFolder(validateButton) {
@@ -55,6 +55,20 @@ function rename(renameButtons) {
                     element.parentElement.removeChild(element);
                     this.innerHTML = oldInput;
                 }
+            }
+        }
+    }
+}
+
+function moveButtons() {
+    var moveButtons = document.querySelectorAll('.move');
+    for (var i in moveButtons) {
+        moveButtons[i].onclick = function() {
+            this.style.display = 'none';
+            this.parentElement.children[1].style.display = 'flex';
+            this.parentElement.querySelector('.cancel-move').onclick = function() {
+                this.closest('td').children[0].style.display = 'block';
+                this.closest('td').children[1].style.display = 'none';
             }
         }
     }
