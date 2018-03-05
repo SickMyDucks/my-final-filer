@@ -33,6 +33,7 @@ function rename(renameButtons) {
             e.currentTarget.closest('tr').querySelector('.name').children[0].focus();
             var actions = document.createElement('div');
             validate = document.createElement('div');
+            validate.className = 'validate';
             validate.innerHTML = '<i class="fas fa-check"></i>'
             cancel = document.createElement('div');
             cancel.innerHTML = '<i class="fas fa-times"></i>'
