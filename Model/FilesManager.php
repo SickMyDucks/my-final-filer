@@ -5,8 +5,6 @@ class FilesManager
 {
     public function upload($file, $filename)
     {
-        session_start();
-
         if (isset($_SESSION['username'])) {
             $targetDir = "uploads/" . $_SESSION['username'] . "/";
             $targetFile = $targetDir . $filename;
@@ -20,7 +18,7 @@ class FilesManager
         }
         if ($uploadOk === 1) {
             if (move_uploaded_file($file["tmp_name"], $targetFile)) {
-                $logs['success'] = "The file " . basename($file["name"]) . " has been uploaded.";
+                $logs['success'] = "The file " . basename($filename) . " has been uploaded.";
 
             } else {
                 $logs['error'] = "Sorry, there was an error uploading your file.";
@@ -50,7 +48,7 @@ class FilesManager
 
     public function parentFolder($folder)
     {
-        $lastDirRegexp = "/\/([a-zA-Z]+)$/";
+        $lastDirRegexp = "/\/([a-zA-Z]+(\/)?)$/";
         $lowerLevel = preg_replace($lastDirRegexp, '', $folder);
         return $lowerLevel;
     }
@@ -73,6 +71,7 @@ class FilesManager
     {
         session_start();
         $file = "uploads/" . $_SESSION['username'] . $file;
+        $file = str_replace('..', '', $file);
         unlink($file);
         header('Location: ?action=files&dir=' . $dir);
     }
