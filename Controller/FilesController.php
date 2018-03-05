@@ -97,9 +97,8 @@ class FilesController extends BaseController
         $currentDir = $manager->parentFolder($from);
         $source = $basepath . $from;
         $to = $basepath . $currentDir . '/' . $_GET['to'] . '/' . $file;
-        echo $from . '<br>' . $source . '<br>' . $to;
         $manager->move($source, $to);
-        // header('Location: ?action=files&dir=' . $manager->parentFolder($_GET['from']));
+        header('Location: ?action=files&dir=' . $manager->parentFolder($_GET['from']));
     }
 
     public function renameItemAction() {
@@ -110,5 +109,13 @@ class FilesController extends BaseController
         echo $dir . '<br>' . $from . '<br>' . $to . '<br>' ;
         $manager = new FilesManager();
         $manager->move($dir.$from, $dir.$to);
+        header('Location: ?action=files&dir=' . $_GET['dir']);
+    }
+
+    public function makeDirAction() {
+        session_start();
+        $currentDir = $_GET['dir'];
+        mkdir('uploads/' . $_SESSION['username'] . $_GET['dir'] . '/NewFolder');
+        header('Location: ?action=files&dir=' . $_GET['dir']);
     }
 }
