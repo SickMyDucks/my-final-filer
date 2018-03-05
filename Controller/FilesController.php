@@ -8,7 +8,7 @@ class FilesController extends BaseController
     public function uploadAction()
     {
         session_start();
-        if(!isset($_SESSION))
+        if(!isset($_SESSION['username']))
         {
             header('Location: ?action=login');
         }
@@ -22,6 +22,7 @@ class FilesController extends BaseController
             {
                 $filename = $_POST['name'];
                 $filename = str_replace('/', '', $filename);
+                $filename = str_replace(' ', '_', $filename);             
             } else {
                 $filename = $_FILES["file"]["name"];
                 $filename = str_replace('/', '', $filename);
@@ -42,7 +43,7 @@ class FilesController extends BaseController
         session_start();
         if(!isset($_SESSION))
         {
-            header('Location: ?action=login');
+            header('Location: ?action=login&dir=/');
             return false;
         }
         $manager = new FilesManager();
@@ -109,7 +110,7 @@ class FilesController extends BaseController
         echo $dir . '<br>' . $from . '<br>' . $to . '<br>' ;
         $manager = new FilesManager();
         $manager->move($dir.$from, $dir.$to);
-        header('Location: ?action=files&dir=' . $_GET['dir']);
+        header('Location: &dir=' . $_GET['dir']);
     }
 
     public function makeDirAction() {
