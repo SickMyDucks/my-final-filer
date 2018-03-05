@@ -74,3 +74,37 @@ input[type="submit"] {
 .success {
     color : #26A65B;
 }
+
+.move {
+    display: none;
+}
+
+.selection {
+    display: flex;  
+}
+
+.selection > * {
+    padding: 3px;
+}
+
+select {
+    width: 50%;
+}
+
+.name {
+    display: flex;
+    justify-content: space-between;
+}
+
+.name > * {
+    padding: 0 10px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+}
+.actions > * {
+    padding: 0 3px;
+    cursor: pointer;
+}

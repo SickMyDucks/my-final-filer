@@ -7,28 +7,84 @@
 
 {% if user['username'] is defined %}
 
+<div class="make-directory"><a href="?action=makeDir&amp;dir={{ currentdir }}">+ Folder</a></div>
+
 <table>
+    <tr>
+        <td></td>
+        <td>Name</td>
+        <td>Modified last</td>
+        <td>Download</td>
+        <td>Edit</td>
+        <td>Delete</td>
+        <td>Move to</td>
+    </tr>
     {% for item in directory %}
         <tr>
-            <td><i class="fas fa-{{ item['type'] }}"></i></td>
-            <td>
+            <td><i class="fas fa-{{ item['type'] }}"></i></td> {# Icon type <td> #}
+            {# Name <td> #}
             {% if item['type'] == 'folder' %}
+
                 {% if item['name'] == '..' %}
-                <a href="?action=files&amp;dir={{ lowerlevel }}">{{ item['name'] }}</a>
+
+                <td class="name"><a href="?action=files&amp;dir={{ lowerlevel }}">{{ item['name'] }}</a></td>
+                
                 {% else %}
-                <a href="?action=files&amp;dir={{ currentdir }}/{{ item['name'] }}">{{ item['name'] }}</a>
+
+                <td class="name"><a href="?action=files&amp;dir={{ currentdir }}/{{ item['name'] }}">{{ item['name'] }}</a></td>                
+                
                 {% endif %}
+
             {% else %}
-            {{ item['name'] }}
+
+            <td class="name"><span>{{ item['name'] }}</span></td>
+
             {% endif %}
-            </td>
-            <td>{{ item['modified_last'] }}</td>
+            {# End Name <td> #}
+
+
+            <td>{{ item['modified_last'] }}</td> {# Modified Last <td> #}
+
+            {# Download, edit and remove <td> #}
             {% if item['type'] == 'file' %}
+
             <td><a href="?action=download&amp;file={{ currentdir }}/{{ item['name'] }}"><i class="fas fa-download"></i></a></td>
+            <td><div class="edit"><i class="fas fa-edit"></i></div></td>
             <td><a href="?action=delete&amp;dir={{ currentdir }}&amp;file={{ currentdir }}/{{ item['name'] }}"><i class="fas fa-trash"></i></a></td>
+            
+            {% else %}
+
+            <td></td>
+                {% if item['name'] != '..' %} 
+                <td><div class="edit"><i class="fas fa-edit"></i></div></td>
+                <td><a href="?action=deleteDir&amp;dir={{ currentdir }}/{{ item['name'] }}"><i class="fas fa-trash"></i></a></td>
+                {% else %}
+                <td></td>
+                <td></td>
+                {% endif %}
+            {% endif %}
+            {# End Download, edit and remove <td> #}
+
+            {# move <td> #}
+            {% if item['name'] != '..' %}
+            <td>
+                <div class="move"><i class="fas fa-share"></i></div>
+                <div class="selection">
+                    <select>
+                        {% for folder in folders %}
+                        {% if folder != item['name'] %}
+                        <option value="{{ folder }}">{{ folder }}</option> 
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <a href="" class="validate-move"><i class="fas fa-check"></i></a>
+                    <a href="" class="cancel-move"><i class="fas fa-times"></i></a>
+                </div>
+            </td>
             {% else %}
             <td></td>
             {% endif %}
+            {# End move <td> #}
         </tr>
     {% endfor %}
     {% if error != "" %}
