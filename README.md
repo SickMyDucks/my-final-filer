@@ -6,7 +6,7 @@
 
 * Front
 * Edit files
-* Manage folders (create, rename, move, delete)
+* Visualize files
 * Server configuration
 * Log files (Access, and Security)
 
