@@ -18,17 +18,17 @@
         <td>Edit</td>
         <td>Delete</td>
         <td>Move to</td>
+        <td>View file</td>
     </tr>
     {% for item in directory %}
+    {% if item['name'] != '..' or (currentdir != '/' and currentdir != '') %}
         <tr>
             <td><i class="fas fa-{{ item['type'] }}"></i></td> {# Icon type <td> #}
             {# Name <td> #}
             {% if item['type'] == 'folder' %}
 
                 {% if item['name'] == '..' %}
-
-                <td class="name"><a href="?action=files&amp;dir={{ lowerlevel }}">{{ item['name'] }}</a></td>
-                
+                <td class="name"><a href="?action=files&amp;dir={{ lowerlevel }}"> {{ item['name'] }} <i class="fas fa-level-up-alt"></i></a></td>
                 {% else %}
 
                 <td class="name"><a href="?action=files&amp;dir={{ currentdir }}/{{ item['name'] }}">{{ item['name'] }}</a></td>                
@@ -85,7 +85,15 @@
             <td></td>
             {% endif %}
             {# End move <td> #}
+            {# View file <td> #}
+            {% if item['extension'] in ['jpg', 'png', 'jpeg', 'JPG'] %}
+            <td><a href="?action=view&amp;file={{ currentdir }}/{{ item['name'] }}&amp;type={{ item['extension'] }}"><i class="fas fa-eye"></i></a></td>
+            {% else %}
+            <td></td>
+            {% endif %}
+            {# End View file <td> #}
         </tr>
+    {% endif %}                
     {% endfor %}
     {% if error != "" %}
     <tr>

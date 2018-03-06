@@ -104,3 +104,27 @@ select {
     padding: 0 3px;
     cursor: pointer;
 }
+
+table {
+    border-collapse: collapse;
+}
+
+tr:first-child td {
+    text-align: center;
+}
+
+tr:nth-child(odd) {
+    background-color: #FFF;
+}
+
+tr:nth-child(even) {
+    background-color: #ebddf0;
+}
+
+td {
+    padding: 5px 20px;
+}
+
+td:nth-child(1), td:nth-child(4), td:nth-child(5), td:nth-child(6), td:nth-child(7), td:nth-child(8) {
+    text-align: center;
+}
