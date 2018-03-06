@@ -18,6 +18,7 @@
         <td>Edit</td>
         <td>Delete</td>
         <td>Move to</td>
+        <td>View file</td>
     </tr>
     {% for item in directory %}
     {% if item['name'] != '..' or (currentdir != '/' and currentdir != '') %}
@@ -84,6 +85,13 @@
             <td></td>
             {% endif %}
             {# End move <td> #}
+            {# View file <td> #}
+            {% if item['extension'] in ['jpg', 'png', 'jpeg', 'JPG'] %}
+            <td><a href="?action=view&amp;file={{ currentdir }}/{{ item['name'] }}&amp;type={{ item['extension'] }}"><i class="fas fa-eye"></i></a></td>
+            {% else %}
+            <td></td>
+            {% endif %}
+            {# End View file <td> #}
         </tr>
     {% endif %}                
     {% endfor %}
