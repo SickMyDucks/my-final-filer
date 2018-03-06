@@ -102,4 +102,9 @@ class FilesManager
     {
         rename($source, $to);  
     }
+
+    public function readFile($filepath)
+    {
+        return file_get_contents($filepath);
+    }
 }

@@ -102,21 +102,40 @@ class FilesController extends BaseController
         header('Location: ?action=files&dir=' . $manager->parentFolder($_GET['from']));
     }
 
-    public function renameItemAction() {
+    public function renameItemAction()
+    {
         session_start();
         $dir = 'uploads/' . $_SESSION['username'] . $_GET['dir'] . '/';
         $from = str_replace('/', '', $_GET['from']);
         $to = str_replace('/', '', $_GET['to']);
-        echo $dir . '<br>' . $from . '<br>' . $to . '<br>' ;
         $manager = new FilesManager();
         $manager->move($dir.$from, $dir.$to);
         header('Location: ?action=files&dir=' . $_GET['dir']);
     }
 
-    public function makeDirAction() {
+    public function makeDirAction()
+    {
         session_start();
         $currentDir = $_GET['dir'];
         mkdir('uploads/' . $_SESSION['username'] . $_GET['dir'] . '/NewFolder');
         header('Location: ?action=files&dir=' . $_GET['dir']);
+    }
+
+    public function viewAction()
+    {
+        session_start();
+        $manager = new FilesManager();
+        $file = 'uploads/' . $_SESSION['username'] . $_GET['file'];
+        $type = $_GET['type'];
+        if ($type == 'txt')
+        {
+            $textfileContent = $manager->readFile($file);
+        }
+        $data = [
+            'filepath'        => $file,
+            'filetype'        => $type,
+            'textfileContent' => isset($textfileContent) ? $textfileContent : '',
+        ];
+        return $this->render('viewFile.html.twig', $data);
     }
 }
