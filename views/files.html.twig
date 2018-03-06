@@ -21,7 +21,7 @@
         <td>View file</td>
     </tr>
     {% for item in directory %}
-    {% if item['name'] != '..' or (currentdir != '/' and currentdir != '') %}
+    {% if item['name'] != '..' or (currentdir not in ['', '/', '//']) %}
         <tr>
             <td><i class="fas fa-{{ item['type'] }}"></i></td> {# Icon type <td> #}
             {# Name <td> #}
@@ -72,7 +72,7 @@
                 <div class="selection">
                     <select>
                         {% for folder in folders %}
-                        {% if folder != item['name'] %}
+                        {% if folder != item['name'] and (currentdir not in ['', '/', '//'] or folder != '..') %}
                         <option value="{{ folder }}">{{ folder }}</option> 
                         {% endif %}
                         {% endfor %}
