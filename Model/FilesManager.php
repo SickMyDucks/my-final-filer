@@ -49,8 +49,10 @@ class FilesManager
 
     public function parentFolder($folder)
     {
-        $lastDirRegexp = "/\/([a-zA-Z]+(\.|\_)?[a-zA-Z]*(\/)?)$/";
-        $lowerLevel = preg_replace($lastDirRegexp, '', $folder);
+        $lowerLevel = explode('/',$folder);
+        $lowerLevel = array_filter($lowerLevel);
+        array_pop($lowerLevel);
+        $lowerLevel = '/'.implode('/',$lowerLevel).'/';
         return $lowerLevel;
     }
 
@@ -100,6 +102,7 @@ class FilesManager
 
     public function move($source, $to)
     {
+        $source = str_replace(' ', '_', $source);
         rename($source, $to);  
     }
 
