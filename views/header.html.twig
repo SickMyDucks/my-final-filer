@@ -3,6 +3,8 @@
     {% if user['username'] is defined %}
         <div>Connected as {{ user['username'] }}</div>
         <div><a href="?action=logout">Logout</a></div>
+        <div><a href="?action=upload">Upload</a></div>
+        <div><a href="?action=files&amp;dir=/">My files</a></div>
     {% else %}
         <div class="header">
             <div><a href="?action=register">Register</a></div>
