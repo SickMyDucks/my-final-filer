@@ -110,7 +110,7 @@ class FilesController extends BaseController
         echo $dir . '<br>' . $from . '<br>' . $to . '<br>' ;
         $manager = new FilesManager();
         $manager->move($dir.$from, $dir.$to);
-        header('Location: &dir=' . $_GET['dir']);
+        header('Location: ?action=files&dir=' . $_GET['dir']);
     }
 
     public function makeDirAction() {
