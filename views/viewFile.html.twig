@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+{% use 'header.html.twig' %}
+
+{% block content %}
+
+<div class="file-display">
+
+    {% if filetype in ['jpg', 'JPG', 'png', 'gif', 'jpeg', 'JPEG'] %}
+    <img src="{{ filepath }}">
+    {% elseif filetype == 'txt' %}
+    <pre>{{ textfileContent }}</pre>
+    {% elseif filetype in ['mp4', 'avi'] %}
+    <video controls>
+        <source src="{{ filepath }}">
+    </video>
+    {% elseif filetype in ['mp3', 'wav'] %}
+    <audio controls>
+        <source src="{{ filepath }}">
+    </audio>
+    {% endif %}
+</div>
+
+{% endblock %}
