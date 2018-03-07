@@ -5,8 +5,6 @@
 ## TODO : 
 
 * Front
-* Edit files
-* Visualize files
 * Server configuration
 * Log files (Access, and Security)
 
