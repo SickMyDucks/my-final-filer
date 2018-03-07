@@ -6,7 +6,9 @@ class MainController extends BaseController
 {
     public function homeAction()
     {
-        return $this->render('home.html.twig');
+        session_start();
+        $data = ['user' => $_SESSION];
+        return $this->render('home.html.twig', $data);
     }
 
     public function registerAction()
