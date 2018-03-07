@@ -4,6 +4,7 @@ window.onload = () => {
     moveFolder(validateButton);
     rename(renameButtons);
     moveButtons();
+    confirmEdit();
 }
 
 function moveFolder(validateButton) {
@@ -70,6 +71,20 @@ function moveButtons() {
                 this.closest('td').children[0].style.display = 'block';
                 this.closest('td').children[1].style.display = 'none';
             }
+        }
+    }
+}
+
+function confirmEdit() {
+    editForm = document.querySelector('form[name="editingFile"]');
+    if (editForm != null) {
+        editForm.onsubmit = function() {
+        var url = window.location.href;
+        url = new URL(url);
+        file = url.searchParams.get("file");
+        target = '?action=editFile&file=' + file + '&file-content=' + encodeURIComponent(this[0].value) + "&type=" + url.searchParams.get("type");
+        window.location.href = target;
+        return false;
         }
     }
 }
