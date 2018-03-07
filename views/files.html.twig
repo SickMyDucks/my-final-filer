@@ -19,6 +19,7 @@
         <td>Delete</td>
         <td>Move to</td>
         <td>View file</td>
+        <td>Edit File</td>
     </tr>
     {% for item in directory %}
     {% if item['name'] != '..' or (currentdir not in ['', '/', '//']) %}
@@ -85,6 +86,7 @@
             <td></td>
             {% endif %}
             {# End move <td> #}
+
             {# View file <td> #}
             {% if item['extension'] in ['jpg', 'JPG', 'png', 'gif', 'jpeg', 'JPEG', 'txt', 'mp4', 'avi', 'mp3', 'wav'] %}
             <td><a href="?action=view&amp;file={{ currentdir }}/{{ item['name'] }}&amp;type={{ item['extension'] }}"><i class="fas fa-eye"></i></a></td>
@@ -92,6 +94,13 @@
             <td></td>
             {% endif %}
             {# End View file <td> #}
+
+            {# Edit File <td> #}
+            {% if item['extension'] == 'txt' %}
+            <td><a href="?action=editFile&amp;file={{ currentdir }}/{{ item['name'] }}&amp;type={{ item['extension'] }}"><i class="fas fa-pencil-alt"></i></a></td>
+            {% else %}
+            <td></td>
+            {% endif %}
         </tr>
     {% endif %}                
     {% endfor %}
