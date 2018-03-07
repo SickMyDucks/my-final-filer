@@ -132,10 +132,37 @@ class FilesController extends BaseController
             $textfileContent = $manager->readFile($file);
         }
         $data = [
+            'user'        => $_SESSION,
             'filepath'        => $file,
             'filetype'        => $type,
             'textfileContent' => isset($textfileContent) ? $textfileContent : '',
         ];
         return $this->render('viewFile.html.twig', $data);
+    }
+
+    public function editFileAction()
+    {
+        session_start();
+        $manager = new FilesManager();
+        $file = 'uploads/' . $_SESSION['username'] . $_GET['file'];
+        if (isset($_GET['file-content']))
+        {
+            $manager->editFile($file, $_GET['file-content']);
+            header("Location: ?action=view&file=" . $_GET['file'] . "&type=" . $_GET['type']);
+        } else {
+            $type = $_GET['type'];
+            if ($type == 'txt')
+            {
+                $textfileContent = $manager->readFile($file);
+            }
+            $data = [
+                'user'            => $_SESSION,
+                'file'            => $_GET['file'],
+                'filepath'        => $file,
+                'filetype'        => $type,
+                'textfilecontent' => isset($textfileContent) ? $textfileContent : '',
+            ];
+            return $this->render('editFile.html.twig', $data);
+        }
     }
 }

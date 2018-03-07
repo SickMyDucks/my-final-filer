@@ -110,4 +110,9 @@ class FilesManager
     {
         return file_get_contents($filepath);
     }
+
+    public function editFile($filepath, $content)
+    {
+        return file_put_contents($filepath, $content);
+    }
 }

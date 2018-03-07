@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+{% use 'header.html.twig' %}
+
+{% block content %}
+
+<div class="file-display">
+    <form action="?action=editFile&amp;file={{ file }}" name="editingFile" method="GET">
+        {% if filetype == 'txt' %}
+        <textarea name="file-content">{{ textfilecontent }}</textarea>
+        <input type="submit" value="Save changes !">
+        {% endif %}
+    </form>
+</div>
+
+{% endblock %}
