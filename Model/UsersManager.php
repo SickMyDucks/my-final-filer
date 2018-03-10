@@ -49,6 +49,7 @@ class UsersManager
     
             $stmt->execute();
     
+            file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : User '. $username . ' registered' . "\n", FILE_APPEND);
             mkdir('uploads/'.$username);
             header('Location: ?action=login');
         }
@@ -65,9 +66,9 @@ class UsersManager
         $user = $result->fetch();
         $hash = $user['hashedPassword'];
         if (password_verify($password, $hash)) {
-            session_start();
             $_SESSION['id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
+            file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : ' .  $_SESSION['username'] . ' logged ine' . "\n", FILE_APPEND);
             header('Location: ?action=upload');
             exit();
         } else {

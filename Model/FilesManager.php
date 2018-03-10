@@ -19,7 +19,7 @@ class FilesManager
         if ($uploadOk === 1) {
             if (move_uploaded_file($file["tmp_name"], $targetFile)) {
                 $logs['success'] = "The file " . basename($filename) . " has been uploaded.";
-
+                file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' uploaded the file ' . $filename. "\n", FILE_APPEND);
             } else {
                 $logs['error'] = "Sorry, there was an error uploading your file.";
             }
@@ -67,6 +67,7 @@ class FilesManager
         header('Pragma: public');
         header('Content-Length: ' . filesize($file));
         readfile($file);
+        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' downloaded the file ' . $file. "\n", FILE_APPEND);
         exit;
     }
 
@@ -76,6 +77,7 @@ class FilesManager
         $file = "uploads/" . $_SESSION['username'] . $file;
         $file = str_replace('..', '', $file);
         unlink($file);
+        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' deleted the file ' . $file . "\n", FILE_APPEND);
         header('Location: ?action=files&dir=' . $dir);
     }
 
@@ -84,6 +86,7 @@ class FilesManager
         foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST) as $path) {
             $path->isDir() && !$path->isLink() ? rmdir($path->getPathname()) : unlink($path->getPathname());
         }
+        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' deleted ' . $dir . ' directory'. "\n", FILE_APPEND);
         rmdir($dir);
     }
 
@@ -103,7 +106,10 @@ class FilesManager
     public function move($source, $to)
     {
         $source = str_replace(' ', '_', $source);
-        rename($source, $to);  
+        if (rename($source, $to))
+        {
+            file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' moved or renamed the file ' . $source . ' to ' . $to. "\n", FILE_APPEND);
+        }  
     }
 
     public function readFile($filepath)
@@ -113,6 +119,7 @@ class FilesManager
 
     public function editFile($filepath, $content)
     {
+        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' edited the file ' . $filepath. "\n", FILE_APPEND);
         return file_put_contents($filepath, $content);
     }
 }

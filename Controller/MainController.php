@@ -15,10 +15,10 @@ class MainController extends BaseController
     {
         $data = [];
         require_once('Model/UsersManager.php');
-        if($_POST['username'] != ""  && $_POST['first-name'] != "" 
-        && $_POST['last-name'] != ""  && $_POST['email'] != "" 
-        && $_POST['password']  != "" && $_POST['password-repeat'] != "" 
-        && $_POST['submit'] != "" ){
+        if(isset($_POST['username']) && isset($_POST['first-name'])
+        && isset($_POST['last-name']) && isset($_POST['email'])
+        && isset($_POST['password']) && isset($_POST['password-repeat'])
+        && isset($_POST['submit'])){
             $username = htmlentities($_POST['username']);
             $firstName = htmlentities($_POST['first-name']);
             $lastName = htmlentities($_POST['last-name']);
@@ -59,6 +59,7 @@ class MainController extends BaseController
     public function logoutAction()
     {
         session_start();
+        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : ' . $_SESSION['username'] . ' logged out' . "\n", FILE_APPEND);
         session_destroy();
         header('Location: index.php');
         exit();
