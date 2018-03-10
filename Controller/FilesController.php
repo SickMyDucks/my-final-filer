@@ -26,6 +26,7 @@ class FilesController extends BaseController
             } else {
                 $filename = $_FILES["file"]["name"];
                 $filename = str_replace('/', '', $filename);
+                $filename = str_replace(' ', '_', $filename);    
             }
             $logs = $manager->upload($_FILES['file'], $filename);
             $data = [
@@ -106,8 +107,8 @@ class FilesController extends BaseController
     {
         session_start();
         $dir = 'uploads/' . $_SESSION['username'] . $_GET['dir'] . '/';
-        $from = str_replace('/', '', $_GET['from']);
-        $to = str_replace('/', '', $_GET['to']);
+        $from = str_replace('/', '', urldecode($_GET['from']));
+        $to = str_replace('/', '', urldecode($_GET['to']));
         $manager = new FilesManager();
         $manager->move($dir.$from, $dir.$to);
         header('Location: ?action=files&dir=' . $_GET['dir']);
