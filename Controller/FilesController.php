@@ -30,8 +30,8 @@ class FilesController extends BaseController
             }
             $logs = $manager->upload($_FILES['file'], $filename);
             $data = [
-                'error'   => $logs['error'],
-                'success' => $logs['success'],
+                'error'   => isset($logs['error']) ? $logs['error'] : '',
+                'success' => isset($logs['success']) ? $logs['success'] : '',
                 'user'    => $_SESSION,
             ];
         }
