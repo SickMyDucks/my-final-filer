@@ -43,11 +43,11 @@ function rename(renameButtons) {
             e.currentTarget.closest('tr').querySelector('.name').append(actions);
 
             document.querySelector('[contenteditable=true]').onblur = function (e) {
-                if (e.explicitOriginalTarget.classList.contains('fa-check') || e.explicitOriginalTarget.classList.contains('validate')) {
+                if (e.explicitOriginalTarget.classList.contains('fa-check') || e.explicitOriginalTarget.classList.contains('validate') || e.explicitOriginalTarget.tagName == 'path') {
                     var url = window.location.href;
                     url = new URL(url);
                     dir = url.searchParams.get("dir");
-                    target = '?action=renameItem' + '&dir=' + dir + "&from=" + oldInput + "&to=" + this.innerHTML;
+                    target = '?action=renameItem' + '&dir=' + encodeURIComponent(dir) + "&from=" + encodeURIComponent(oldInput) + "&to=" + this.innerHTML;
                     window.location.href = target;
                 }
                 if (e.currentTarget != document.querySelector('.actions div:first-child')) {
