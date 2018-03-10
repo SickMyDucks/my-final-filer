@@ -1,0 +1,14 @@
+<Files .htaccess>
+	Order Allow,Deny
+	Deny from All
+</Files>
+
+<FilesMatch ".*">
+    Order Allow,Deny
+    Deny from All
+    RewriteEngine on 
+    RewriteCond %{HTTP_REFERER} !^http://(www\.)?localhost [NC] 
+    RewriteCond %{HTTP_REFERER} !^http://(www\.)?localhost.*$ [NC] 
+    RewriteRule \.(gif|jpg)$ - [F]
+    RewriteRule ".*" [F]
+</FilesMatch>
