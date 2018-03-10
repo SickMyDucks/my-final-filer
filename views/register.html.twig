@@ -4,6 +4,7 @@
 {% block page_title %}Register{% endblock %}
 
 {% block content %}
+<div class="errors">{{ errors['form'] }}</div>
 <form action="?action=register" method="POST" name="register" class="registerForm">
     <div><label for="first-name">First name: </label><input type="text" name="first-name" id="first-name"></div><br>
     <div><label for="last-name">Last name: </label><input type="text" name="last-name" id="last-name"></div><br>

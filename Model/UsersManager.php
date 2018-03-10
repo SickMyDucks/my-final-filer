@@ -32,23 +32,26 @@ class UsersManager
             $isFormValid = false;
         }
 
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        if ($isFormValid)
+        {
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $dbm = DBManager::getInstance();
-        $pdo = $dbm->getPdo();
-        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $stmt = $pdo->prepare("INSERT INTO users (id, firstName, lastName, username, email, hashedPassword) VALUES (NULL, :firstName, :lastName, :username, :email, :hashedPassword)");
-        $stmt->bindParam(':firstName', $firstName);
-        $stmt->bindParam(':lastName', $lastName);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':hashedPassword', $hashedPassword);
-
-        $stmt->execute();
-
-        mkdir('uploads/'.$username);
-        header('Location: ?action=login');
+            $dbm = DBManager::getInstance();
+            $pdo = $dbm->getPdo();
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+            $stmt = $pdo->prepare("INSERT INTO users (id, firstName, lastName, username, email, hashedPassword) VALUES (NULL, :firstName, :lastName, :username, :email, :hashedPassword)");
+            $stmt->bindParam(':firstName', $firstName);
+            $stmt->bindParam(':lastName', $lastName);
+            $stmt->bindParam(':username', $username);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':hashedPassword', $hashedPassword);
+    
+            $stmt->execute();
+    
+            mkdir('uploads/'.$username);
+            header('Location: ?action=login');
+        }
 
         return $errors;
     }

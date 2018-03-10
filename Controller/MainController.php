@@ -15,10 +15,10 @@ class MainController extends BaseController
     {
         $data = [];
         require_once('Model/UsersManager.php');
-        if(isset($_POST['username']) && isset($_POST['first-name'])
-        && isset($_POST['last-name']) && isset($_POST['email'])
-        && isset($_POST['password']) && isset($_POST['password-repeat'])
-        && isset($_POST['submit'])){
+        if($_POST['username'] != ""  && $_POST['first-name'] != "" 
+        && $_POST['last-name'] != ""  && $_POST['email'] != "" 
+        && $_POST['password']  != "" && $_POST['password-repeat'] != "" 
+        && $_POST['submit'] != "" ){
             $username = htmlentities($_POST['username']);
             $firstName = htmlentities($_POST['first-name']);
             $lastName = htmlentities($_POST['last-name']);
@@ -28,6 +28,8 @@ class MainController extends BaseController
             $manager = new UsersManager();
             $errors = $manager-> register($firstName, $lastName, $username, $email, $password, $passwordRepeat);
             $data = ['errors' => $errors];
+        } else {
+            $data['errors']['form'] = "Please fill in all the fields.";
         }
         return $this->render('register.html.twig', $data);
     }
