@@ -157,3 +157,8 @@ textarea {
     height: 80%;
     width: 90%;
 }
+
+.make-directory {
+    margin: 10px;
+    font-weight: bold;
+}
