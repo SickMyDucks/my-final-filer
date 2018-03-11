@@ -2,13 +2,41 @@
 
 ## By Benjamin COURTINE & Neil RICHTER
 
-## TODO : 
+# musti
 
-* Front
-* Edit files
-* Visualize files
-* Server configuration
-* Log files (Access, and Security)
+There is currently a live demo available at : http://musti.keepthis4.me
+
+## Database
+
+Make sure you replace the credentials in `config.php` with yours, so queries can work.
+
+or
+```php
+$config = [
+    'db' => [
+        'name'     => 'dbname',
+        'user'     => 'username',
+        'password' => 'password',
+        'host'     => '127.0.0.1',
+        'port'     => null,
+    ]
+];
+```
+
+## Users
+New users will have their directory named after their username in the directory `uploads`.
+
+```
+users/
+├── .htaccess
+└── johndoe
+    ├── file.jpg
+    └── dir
+        └── file.pdf
+```
+
+## Directories access
+in the directory `uploads/` there is a `.htaccess` (Apache) that will prevent any user, logged in or not to download or display in the browser any file that doesn't belong to him. It will return a 403 Forbiden error instead.
 
 Installation
 ============
