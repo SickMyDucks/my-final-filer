@@ -75,7 +75,11 @@ class FilesManager
     {
         session_start();
         $file = "uploads/" . $_SESSION['username'] . $file;
-        $file = str_replace('..', '', $file);
+        $file = str_replace('..', '', $file, $count);
+        if ($count > 0)
+        {
+            file_put_contents('logs/security.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' tried to delete a file from a parent folder' . "\n", FILE_APPEND);
+        }
         unlink($file);
         file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' deleted the file ' . $file . "\n", FILE_APPEND);
         header('Location: ?action=files&dir=' . $dir);
@@ -106,6 +110,7 @@ class FilesManager
     public function move($source, $to)
     {
         $source = str_replace(' ', '_', $source);
+        $to = str_replace(' ', '_', $to);
         if (rename($source, $to))
         {
             file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' moved or renamed the file ' . $source . ' to ' . $to. "\n", FILE_APPEND);

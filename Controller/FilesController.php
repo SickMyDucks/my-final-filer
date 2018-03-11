@@ -21,11 +21,19 @@ class FilesController extends BaseController
             if (isset($_POST['name']) && $_POST['name'] !== '')
             {
                 $filename = $_POST['name'];
-                $filename = str_replace('/', '', $filename);
+                $filename = str_replace('/', '', $filename, $count);
+                if ($count > 0)
+                {
+                    file_put_contents('logs/security.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' tried to upload a file in an illegal folder' . "\n", FILE_APPEND);                    
+                }
                 $filename = str_replace(' ', '_', $filename);             
             } else {
                 $filename = $_FILES["file"]["name"];
-                $filename = str_replace('/', '', $filename);
+                $filename = str_replace('/', '', $filename, $count);
+                if ($count > 0 )
+                {
+                    file_put_contents('logs/security.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' tried to upload a file in an illegal folder' . "\n", FILE_APPEND);                                        
+                }
                 $filename = str_replace(' ', '_', $filename);    
             }
             $logs = $manager->upload($_FILES['file'], $filename);
@@ -83,7 +91,14 @@ class FilesController extends BaseController
         $manager = new FilesManager();
         session_start();
         $pattern = '/(\.\..)/';
-        $dir = "uploads/" . $_SESSION['username'] . preg_replace($pattern, '', $_GET['dir']);
+        
+        $dir = "uploads/" . $_SESSION['username'] . str_replace('..', '/', $_GET['dir'], $count);
+        if ($count > 0)
+        {
+            $lowerLevel = $manager->parentFolder($_GET['dir']);
+            header("Location: ?action=files&dir=$lowerLevel");
+            return file_put_contents('logs/security.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' tried to delete a directory of a parent folder' . "\n", FILE_APPEND);            
+        }
         $lowerLevel = $manager->parentFolder($_GET['dir']);
         $manager->delTree($dir);
         header("Location: ?action=files&dir=$lowerLevel");
@@ -108,7 +123,12 @@ class FilesController extends BaseController
         session_start();
         $dir = 'uploads/' . $_SESSION['username'] . $_GET['dir'] . '/';
         $from = str_replace('/', '', urldecode($_GET['from']));
-        $to = str_replace('/', '', urldecode($_GET['to']));
+        $to = str_replace('/', '', urldecode($_GET['to']), $count);
+        if ($count > 0)
+        {
+            file_put_contents('logs/security.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' tried to rename an item with an illegal name' . "\n", FILE_APPEND);            
+            return header('Location: ?action=files&dir=' . $_GET['dir']);
+        }
         $manager = new FilesManager();
         $manager->move($dir.$from, $dir.$to);
         header('Location: ?action=files&dir=' . $_GET['dir']);
@@ -119,6 +139,7 @@ class FilesController extends BaseController
         session_start();
         $currentDir = $_GET['dir'];
         mkdir('uploads/' . $_SESSION['username'] . $_GET['dir'] . '/NewFolder');
+        file_put_contents('logs/access.log', '[' . date("Y-m-d H:i:s") . '] : '. $_SESSION['username'] . ' created a directory ' . "\n", FILE_APPEND);
         header('Location: ?action=files&dir=' . $_GET['dir']);
     }
 
