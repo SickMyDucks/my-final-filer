@@ -1,4 +1,12 @@
 window.onload = () => {
+    var url = window.location.href;
+    var regex = /[^:]\/{2,}/;
+    match = regex.exec(url);
+    if (typeof match != 'undefined' && match != null) {
+        url = url.replace(match, match[0].substr(0,1) + '/');
+        window.location.href = url;
+    }
+
     var validateButton = document.querySelectorAll('.validate-move');
     var renameButtons = document.querySelectorAll('.edit')
     moveFolder(validateButton);
