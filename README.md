@@ -1,11 +1,6 @@
 # Final Filer
 
 ## By Benjamin COURTINE & Neil RICHTER
-
-# musti
-
-There is currently a live demo available at : http://musti.keepthis4.me
-
 ## Database
 
 Make sure you replace the credentials in `config.php` with yours, so queries can work.
